@@ -1,0 +1,43 @@
+.header {
+    background-color: var(--blue-accent);
+}
+
+.header > div,
+.header div > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header a,
+.header h1 {
+    color: var(--font-white)
+}
+
+.header a {
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.header h1 {
+    font-family: "Urbanist", sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.15rem;
+}
+
+.header h2 {
+    font-size: 3.5rem;
+}
+
+.header button {
+    padding: 0.7rem 1rem;
+    border-radius: 0.3rem;
+    border: 2px solid var(--blue-normal);
+    color: var(--blue-normal);
+    font-weight: 700;
+}
+
+.footer {
+    background-color: var(--blue-accent);
+}

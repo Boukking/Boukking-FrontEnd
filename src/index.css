@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Mali:wght@700&family=Urbanist:ital,wght@0,600;1,500&display=swap');
+
+#root {
+  --page-width: 1100px;
+
+  --blue-accent: #0386d2;
+  --blue-normal: #00a2ff;
+
+  --font-basic: "Comic Neue", cursive;
+  --font-logo: "Mali", cursive;
+  --font-white: rgb(241, 241, 241);
+  --font-black: rgb(24, 21, 21);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, a {
+  color: rgb(31, 31, 36);
+  font-family: var(--font-basic);
+  font-weight: 400;
+  font-style: normal;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.page {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
