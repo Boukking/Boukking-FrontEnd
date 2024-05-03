@@ -2,8 +2,8 @@
     background-color: var(--blue-accent);
 }
 
-.header > div,
-.header div > div {
+.header > div:first-child,
+.header > div:first-child > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,7 +11,9 @@
 }
 
 .header a,
-.header h1 {
+.header > div > p,
+.header h2,
+.header > form >button {
     color: var(--font-white)
 }
 
@@ -21,23 +23,107 @@
 }
 
 .header h1 {
-    font-family: "Urbanist", sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.15rem;
+    font-family: var(--font-logo);
+    font-size: 2.2rem;
+}
+
+.header > div:last-of-type {
+    position: relative;
+    left: 30px;
 }
 
 .header h2 {
     font-size: 3.5rem;
+    font-weight: 400;
+    margin-bottom: 0;
 }
 
-.header button {
+.header > div:last-child > p{
+    font-size: 1.5rem;
+    font-weight: 200;
+    margin: 0;
+    padding: 1rem 0 3rem;
+}
+
+#error_message {
+    padding-top: 1rem;
+    color: red;
+    text-align: center;
+}
+
+.header > div > div {
+    position: relative;
+}
+
+.header > div > div > button {
     padding: 0.7rem 1rem;
     border-radius: 0.3rem;
     border: 2px solid var(--blue-normal);
     color: var(--blue-normal);
+    background-color: white;
     font-weight: 700;
 }
 
+.header > form {
+    position: relative;
+    height: 60px;
+    bottom: -30px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: orange;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    max-width: calc(var(--page-width) - 200px);
+    z-index: 5;
+}
+
+.header > form > * {
+    border-radius: 0.4rem;
+    border: 0;
+    outline: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 1rem;
+    height: 100%;
+}
+
+#place_input {
+    flex-grow: 1;
+}
+
+.header > form > p {
+    color: black;
+    font-size: 2rem;
+    padding: 10px 0 0;
+    margin: 0;
+}
+
+.header > form > input:last-of-type {
+    width: 88px;
+}
+
+.header > form > button {
+    background-color: var(--blue-normal);
+    padding: 0 2rem;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+}
+
 .footer {
-    background-color: var(--blue-accent);
+    background-color: var(--white-normal);
+    padding: 7rem 0 2rem;
+    flex-grow: 1;
+}
+
+.footer h1 {
+    font-weight: 500;
+    margin-bottom: 3rem;
+}
+
+.footer > div > article {
+    display: flex;
+    justify-content: center;
 }
