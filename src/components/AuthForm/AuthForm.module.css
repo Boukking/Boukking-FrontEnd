@@ -80,7 +80,7 @@ form * {
 }
 
 .error_message {
-    align-self: center;
+    text-align: center;
     color: red;
     margin: 0;
     padding-bottom: 1rem;
