@@ -2,34 +2,10 @@
     background-color: var(--blue-accent);
 }
 
-.header > div:first-child,
-.header > div:first-child > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.header a,
 .header > div > p,
-.header h2,
+.header > div > h2,
 .header > form >button {
-    color: var(--font-white)
-}
-
-.header a {
-    font-size: 1.2rem;
-    text-decoration: none;
-}
-
-.header h1 {
-    font-family: var(--font-logo);
-    font-size: 2.2rem;
-}
-
-.header > div:last-of-type {
-    position: relative;
-    left: 30px;
+    color: var(--font-white);
 }
 
 .header h2 {
@@ -38,30 +14,10 @@
     margin-bottom: 0;
 }
 
-.header > div:last-child > p{
-    font-size: 1.5rem;
-    font-weight: 200;
-    margin: 0;
-    padding: 1rem 0 3rem;
-}
-
 #error_message {
     padding-top: 1rem;
     color: red;
     text-align: center;
-}
-
-.header > div > div {
-    position: relative;
-}
-
-.header > div > div > button {
-    padding: 0.7rem 1rem;
-    border-radius: 0.3rem;
-    border: 2px solid var(--blue-normal);
-    color: var(--blue-normal);
-    background-color: white;
-    font-weight: 700;
 }
 
 .header > form {

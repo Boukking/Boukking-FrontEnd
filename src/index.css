@@ -7,10 +7,12 @@
   --blue-accent: #0386d2;
   --blue-normal: #00a2ff;
   --white-normal: #f0f0f0;
+  --grey-accent: rgb(224, 224, 224);
+  --grey-normal: rgb(245, 245, 245);
 
   --font-basic: "Roboto Condensed", sans-serif;
   --font-logo: "Radio Canada Big", sans-serif;
-  --font-white: rgb(241, 241, 241);
+  --font-white: rgb(243, 243, 243);
   --font-black: rgb(24, 21, 21);
 }
 
@@ -19,7 +21,15 @@ body {
   margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, a {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a {
   color: rgb(31, 31, 36);
   font-family: var(--font-basic);
 }
@@ -28,7 +38,28 @@ button:hover {
   cursor: pointer;
 }
 
+.full-page {
+  width: 100%;
+}
+
 .page {
   max-width: var(--page-width);
   margin: 0 auto;
+}
+
+.loader1 {
+  width: 60px;
+  aspect-ratio: 4;
+  --_g: no-repeat radial-gradient(circle closest-side,var(--font-black) 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 100%;
+  animation: loader1 0.5s infinite linear;
+}
+@keyframes loader1 {
+    33%{background-size:calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%}
+    50%{background-size:calc(100%/3) 100%,calc(100%/3) 0%  ,calc(100%/3) 100%}
+    66%{background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0%  }
 }

@@ -1,0 +1,46 @@
+nav {
+    background-color: var(--blue-accent);
+}
+
+nav > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav > div > a > h1 {
+    font-family: var(--font-logo);
+    font-size: 2.2rem;
+}
+
+nav a {
+    text-decoration: none;
+}
+
+nav > div > div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+nav > div > div > a {
+    color: var(--font-white);
+    font-size: 1.2rem;
+}
+
+nav > div > div > button {
+    padding: 0.7rem 1rem;
+    border-radius: 0.3rem;
+    border: 2px solid var(--blue-normal);
+    color: var(--blue-normal);
+    background-color: white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+#user {
+    font-size: 1rem;
+}

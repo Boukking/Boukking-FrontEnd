@@ -1,16 +1,15 @@
-//module
-import { useState } from 'react';
+// module
+import { useState, useContext } from 'react';
 import axios from 'axios';
-import { useContext } from "react";
 import { AuthContext } from "./../../context/AuthContext";
 
-//style
+// style
 import s from './AuthForm.module.css';
 
-//constance
+// constance
 const API_URL = "http://localhost:3000";
 
-export default function AuthForm({ authType, setDisplayRegisterPage, setDisplayLoginPage }) {
+export default function AuthForm({ authType, closeAuthForm }) {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
@@ -32,7 +31,7 @@ export default function AuthForm({ authType, setDisplayRegisterPage, setDisplayL
                 sendLogin(requestBody);
             })
             .catch((error) => {
-                const errorDescription = error.response.data.message;
+                const errorDescription = error.response?.data?.message || error.message || "Error";
                 setErrorMessage(errorDescription);
             })
     }
@@ -40,24 +39,18 @@ export default function AuthForm({ authType, setDisplayRegisterPage, setDisplayL
     function sendLogin(requestBody) {
         axios.post(`${API_URL}/auth/login`, requestBody)
             .then((response) => {
-                closeForm();
                 storeToken(response.data.authToken);
                 authenticateUser();
             })
             .catch((error) => {
-                console.log(error)
-                const errorDescription = error.response.data.message;
+                const errorDescription = error.response?.data?.message || error.message || "Error";
                 setErrorMessage(errorDescription);
             })
     }
 
-    function closeForm() {
-        authType === "Register" ? setDisplayRegisterPage(false) : setDisplayLoginPage(false);
-    }
-
     return (
         <form onSubmit={handleAuthForm} className={s.form}>
-            <span onClick={closeForm}>×</span>
+            <span onClick={closeAuthForm}>×</span>
             <h3>{authType}</h3>
             <p>Username</p>
             <input type="text" value={username} onChange={(e) => setUserName(e.target.value)} />

@@ -1,11 +1,13 @@
+//module
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 const API_URL = "http://localhost:3000";
 
+// instance
 const AuthContext = React.createContext();
 
 function AuthProviderWrapper({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState(null);
 
@@ -17,19 +19,16 @@ function AuthProviderWrapper({ children }) {
         const storedToken = localStorage.getItem('authToken');
 
         if (storedToken) {
-            console.log(storedToken)
             axios.get(
                 `${API_URL}/auth/verify`,
                 { headers: { Authorization: `Bearer ${storedToken}` } }
             )
                 .then((response) => {
-                    console.log(response)
                     setIsLoggedIn(true);
                     setIsLoading(false);
                     setUser(response.data);
                 })
                 .catch((error) => {
-                    console.log(error)
                     setIsLoggedIn(false);
                     setIsLoading(false);
                     setUser(null);
@@ -45,9 +44,10 @@ function AuthProviderWrapper({ children }) {
         localStorage.removeItem('authToken');
         setUser(null);
         setIsLoggedIn(false);
+        setIsLoading(false);
     }
 
-    useEffect(() => {                             
+    useEffect(() => {
         authenticateUser()
     }, []);
 
