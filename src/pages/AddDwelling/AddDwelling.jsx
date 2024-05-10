@@ -23,7 +23,8 @@ export default function AddDwelling() {
     const [zip, setZip] = useState("");
     const [country, setCountry] = useState("");
 
-    const [errorMessage, setErrorMessage] = useState("");
+    const [infoBox, setInfoBox] = useState([]);
+    const [isUploading, setIsUploading] = useState(false);
 
     const imageStateList = [];
 
@@ -45,37 +46,49 @@ export default function AddDwelling() {
 
     function handleNewDwellingForm(e) {
         e.preventDefault();
-        setErrorMessage("")
-        if (!title || !type || !maxPersonNumber || !adress || !city || !zip || !country) return setErrorMessage("Fields with '*' are required");
+        setInfoBox([]);
+        setIsUploading(true);
+        if (!title || !type || !maxPersonNumber || !adress || !city || !zip || !country) return setInfoBox(prevInfoBox =>[...prevInfoBox, ["Fields with '*' are required"]]);
         const newDwelling = { title, type, maxPersonNumber, adress, city, zip, country };
         const imgUrl = [];
         axios.post(`${API_URL}/dwelling`, newDwelling, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
             .then(res => {
+                setInfoBox(prevInfoBox =>[...prevInfoBox, ["The dwelling has been created"]]);
+                console.log("oui")
                 newDwelling._id = res.data._id;
-                const uploadPromises = imageStateList.map((imageState, index) => {
-                    if (imageState[0]) {
-                        const uploadData = new FormData();
-                        uploadData.append("imageUrl", imageState[0].target.files[0]);
-                        return axios.post(`${API_URL}/dwelling/img`, uploadData, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
-                            .then(res => {
-                                imgUrl.push(res.data.fileUrl);
-                            })
-                            .catch(() => setErrorMessage(`Error while uploading the file ${index + 1}`));
-                    }
-                })
-                return Promise.all(uploadPromises)
-                    .then(() => {
-                        console.log("Fini 3 image");
-                        return axios.put(`${API_URL}/dwelling/${newDwelling._id}`, { image: imgUrl }, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
+                if (imageStateList.find(elm => elm[0] !== "")) {
+                    const uploadPromises = imageStateList.map((imageState, index) => {
+                        if (imageState[0]) {
+                            const uploadData = new FormData();
+                            uploadData.append("imageUrl", imageState[0].target.files[0]);
+                            return axios.post(`${API_URL}/dwelling/img`, uploadData, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
+                                .then(res => {
+                                    imgUrl.push(res.data.fileUrl);
+                                    setInfoBox(prevInfoBox =>[...prevInfoBox, [`Image ${index + 1} successfully uploaded`]]);
+                                })
+                                .catch(() => setInfoBox(prevInfoBox =>[...prevInfoBox, [`Error while uploading the image ${index + 1}, check the format`]]));
+                        }
                     })
-                    .catch(() => console.log("attrape catch"));
+                    return Promise.all(uploadPromises)
+                        .then(() => {
+                            return axios.put(`${API_URL}/dwelling/${newDwelling._id}`, { image: imgUrl }, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
+                        })
+                        .then(() => {
+                            setInfoBox(prevInfoBox =>[...prevInfoBox, ["The image(s) have been added to the dwelling"]]);
+                        })
+                        .catch(() => setInfoBox(prevInfoBox =>[...prevInfoBox, ["Error will trying to add image(s) to building"]]));
+                }
+                console.log(imgUrl);
+                return;
+
             })
-            .then(res => {
-                console.log("Fini");
+            .then(() => {
+                setInfoBox(prevInfoBox =>[...prevInfoBox, ["Redirecting to the newly created dwelling"]]);
+                setIsUploading(false);
             })
             .catch(err => {
-                console.log("erreur finale");
-                setErrorMessage(err.response?.data?.message || "Error while creating a new dwelling");
+                setInfoBox(prevInfoBox =>[...prevInfoBox, [err.response?.data?.message || "Error while creating a new dwelling"]]);
+                setIsUploading(false);
             });
     }
 
@@ -154,8 +167,8 @@ export default function AddDwelling() {
                             })
                         }
                     </div>
-                    {errorMessage && <p className={s.error}>{errorMessage}</p>}
-                    <button>Submit</button>
+                    {infoBox && infoBox.map(info => <p className={s.info_box}>{info}</p>)}
+                    <button disabled={isUploading} >{isUploading ? <div className="loader1" /> : "Submit"}</button>
                 </form>
             </div>
         </div>

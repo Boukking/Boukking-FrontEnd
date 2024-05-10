@@ -119,9 +119,13 @@ select {
     margin-bottom: 2rem;
 }
 
-p.error {
+.form > button:disabled {
+    opacity: 0.70;
+}
+
+p.info_box {
     align-self: center;
-    color: red;
+    margin: 0.1rem 0;
 }
 
 .grow {
