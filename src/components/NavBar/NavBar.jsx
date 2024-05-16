@@ -47,15 +47,15 @@ export default function NavBar() {
                 <Link to='/'><h1>Boukking</h1></Link>
                 <div>
                     {
-                        location.pathname !== '/add' &&
+                        location.pathname !== '/dwelling/add' &&
                         <Link
-                            to={isLoggedIn && '/add'}
+                            to={isLoggedIn && '/dwelling/add'}
                             onClick={() => {
                                 if (!isLoggedIn) {
                                     setDisplayRegisterPage(false);
                                     setDisplayLoginPage(true);
                                 }
-                                setRedirect("/add");
+                                setRedirect("/dwelling/add");
                             }}
                         >
                             Add your dwelling

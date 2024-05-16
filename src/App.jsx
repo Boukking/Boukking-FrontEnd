@@ -8,6 +8,7 @@ import MainPage from './pages/MainPage/MainPage';
 // page
 import MainContainer from './pages/MainContainer/MainContainer';
 import AddDwelling from './pages/AddDwelling/AddDwelling';
+import ViewDwelling from './pages/ViewDwelling/ViewDwelling';
 
 export default function App() {
   return (
@@ -15,7 +16,8 @@ export default function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/add" element={<AddDwelling />} />
+        <Route path="/dwelling/add" element={<AddDwelling />} />
+        <Route path="/dwelling/:dwellingId" element={<ViewDwelling />} />
       </Routes>
     </MainContainer>
   )
