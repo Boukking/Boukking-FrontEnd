@@ -1,5 +1,6 @@
 .main {
     flex-grow: 1;
+    background-color: var(--grey-normal);
 }
 
 .main > div > h1 {
@@ -28,7 +29,7 @@ textarea,
 select {
     height: 3rem;
     border: none;
-    background-color: var(--grey-normal);
+    background-color: var(--white-normal);
     border-bottom: 1px solid black;
     outline: none;
     resize: none;

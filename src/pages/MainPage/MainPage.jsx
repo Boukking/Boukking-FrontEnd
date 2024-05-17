@@ -1,8 +1,16 @@
 // module
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // style
 import s from './MainPage.module.css';
+
+// constance
+const API_URL = "http://localhost:3000";
+
+// asset
+import noImageLogo from "./../../assets/icon/no-image.jpg";
 
 export default function MainPage() {
     const [errorMessage, setErrorMessage] = useState(null);
@@ -12,12 +20,26 @@ export default function MainPage() {
     const [numberOfPersons, setNumberOfPersons] = useState("");
     const [offers, setOffers] = useState([]);
 
+    useEffect(() => {
+        axios.get(`${API_URL}/dwelling`)
+            .then(res => setOffers(res.data))
+            .catch(err => console.log(err))
+    }, [])
+
     function handleSearchForm(e) {
         e.preventDefault();
         if (!searchBar) return setErrorMessage("Fill the place to visit");
         if (!fromDate || !toDate) return setErrorMessage("Fill the date");
         if (new Date(toDate) <= new Date(fromDate)) return setErrorMessage("Error, please view the date");
         if (!numberOfPersons) setNumberOfPersons(1);
+    }
+
+    function getDateFormat(dateStr) {
+        const date = new Date(dateStr);
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const year = date.getUTCFullYear();
+        return `${day}/${month}/${year}`;
     }
 
     return (
@@ -45,8 +67,33 @@ export default function MainPage() {
                             !offers.length ?
                                 <p>No offers to show for the moment</p>
                                 :
-                                offers.map(offer => {
-                                    console.log("offer")
+                                offers.sort((a, b) => new Date(b.published) - new Date(a.published)).map((offer, index) => {
+                                    return (
+                                        <Link to={`/dwelling/${offer._id}`} className={s.offer} key={index}>
+                                            <div>
+                                                <div>
+                                                    <img src={offer.image.length ? offer.image[0] : noImageLogo} alt="Dwellling image" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <div><h1>{offer.title}</h1> ({offer.type})</div>
+                                                    <p>{
+
+                                                        offer.rating.length
+                                                    }/5</p>
+                                                </div>
+                                                <div>
+                                                    <p className={s.description}>{offer.description}</p>
+                                                </div>
+                                                <div>
+                                                    <p>For {offer.maxPersonNumber} person{offer.maxPersonNumber > 1 && "s"}</p>
+                                                    <p>{offer.city}📍</p>
+                                                    <p>Added {getDateFormat(offer.published)}</p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    )
                                 })
                         }
                     </article>

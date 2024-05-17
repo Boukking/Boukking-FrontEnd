@@ -2,9 +2,9 @@
     background-color: var(--blue-accent);
 }
 
-.header > div > p,
-.header > div > h2,
-.header > form >button {
+.header>div>p,
+.header>div>h2,
+.header>form>button {
     color: var(--font-white);
 }
 
@@ -20,7 +20,7 @@
     text-align: center;
 }
 
-.header > form {
+.header>form {
     position: relative;
     height: 60px;
     bottom: -30px;
@@ -36,7 +36,7 @@
     z-index: 5;
 }
 
-.header > form > * {
+.header>form>* {
     border-radius: 0.4rem;
     border: 0;
     outline: 0;
@@ -50,18 +50,18 @@
     flex-grow: 1;
 }
 
-.header > form > p {
+.header>form>p {
     color: black;
     font-size: 2rem;
     padding: 10px 0 0;
     margin: 0;
 }
 
-.header > form > input:last-of-type {
+.header>form>input:last-of-type {
     width: 88px;
 }
 
-.header > form > button {
+.header>form>button {
     background-color: var(--blue-normal);
     padding: 0 2rem;
     font-size: 1.2rem;
@@ -69,9 +69,10 @@
 }
 
 .footer {
-    background-color: var(--white-normal);
-    padding: 7rem 0 2rem;
+    background-color: var(--grey-normal);
+    padding: 6rem 0 2rem;
     flex-grow: 1;
+    overflow-y: auto;
 }
 
 .footer h1 {
@@ -79,7 +80,66 @@
     margin-bottom: 3rem;
 }
 
-.footer > div > article {
+.offer {
     display: flex;
-    justify-content: center;
+    gap: 2rem;
+    background-color: var(--white-normal);
+    margin: 2rem 1rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    text-decoration: none;
+}
+
+.offer:hover {
+    transform: scale(1.0075);
+}
+
+.offer h1 {
+    margin: 0;
+    display: inline;
+}
+
+.offer>div,
+.offer>div>div {
+    display: flex;
+}
+
+.offer>div {
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.offer>div>div {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.offer>div>div:last-of-type {
+    font-weight: 600;
+}
+
+.offer>div:last-of-type {
+    flex: 1;
+}
+
+.offer p,
+.offer h1 {
+    margin: 0;
+}
+
+.description {
+    overflow-y: auto;
+    width: 100%;
+    height: 3.5rem;
+    text-align: justify;
+    font-size: 0.9rem;
+}
+
+.offer > div > div > img {
+    height: 168px;
+    width: 168px;
+    object-fit: cover;
+    border-radius: 8px;
 }
