@@ -75,71 +75,87 @@
     overflow-y: auto;
 }
 
-.footer h1 {
-    font-weight: 500;
-    margin-bottom: 3rem;
+.footer form > div:first-of-type {
+    border-bottom: 1px solid var(--blue-normal);
 }
 
-.offer {
+.footer form > div {
+    padding: 0.75rem 1rem;
+}
+
+.footer form h2 {
+    margin: 0;
+}
+
+.footer>div>div {
     display: flex;
     gap: 2rem;
-    background-color: var(--white-normal);
-    margin: 2rem 1rem;
-    padding: 1.5rem;
-    border-radius: 10px;
-    transition: 0.3s;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    text-decoration: none;
+    justify-content: space-between;
 }
 
-.offer:hover {
-    transform: scale(1.0075);
+.footer form {
+    border: 1px solid var(--blue-normal);
+    border-radius: 15px;
+    height: fit-content;
+}
+
+.footer form p {
+    display: inline;
+    white-space: nowrap;
+}
+
+.offers {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    flex-grow: 1;
+}
+
+.offers>a {
+    padding: 1rem;
+    border: 1px solid var(--grey-accent);
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    align-content: space-between;
+    transition: opacity 0.25s;
+}
+
+.offers>a:hover {
+    opacity: 0.75;
+}
+
+.offers>a>div:last-child {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.offer_img {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    border: 1px solid var(--grey-accent);
 }
 
 .offer h1 {
-    margin: 0;
     display: inline;
 }
 
-.offer>div,
-.offer>div>div {
-    display: flex;
-}
-
-.offer>div {
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.offer>div>div {
-    justify-content: space-between;
-    width: 100%;
-}
-
-.offer>div>div:last-of-type {
-    font-weight: 600;
-}
-
-.offer>div:last-of-type {
-    flex: 1;
-}
-
-.offer p,
-.offer h1 {
+.offer p {
     margin: 0;
 }
 
-.description {
-    overflow-y: auto;
-    width: 100%;
-    height: 3.5rem;
-    text-align: justify;
-    font-size: 0.9rem;
+.offer > div > div {
+    display: flex;
+    justify-content: space-between;
 }
 
-.offer > div > div > img {
-    height: 168px;
-    width: 168px;
-    object-fit: cover;
-    border-radius: 8px;
+.description {
+    max-height: 140px;
+    overflow: hidden;
+    font-size: 0.9rem;
 }

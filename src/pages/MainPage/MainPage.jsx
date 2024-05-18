@@ -19,12 +19,22 @@ export default function MainPage() {
     const [toDate, setToDate] = useState("");
     const [numberOfPersons, setNumberOfPersons] = useState("");
     const [offers, setOffers] = useState([]);
+    const [offersToDisplay, setOffersToDisplay] = useState([]);
+    const [typeFilter, setTypeFilter] = useState([]);
 
     useEffect(() => {
         axios.get(`${API_URL}/dwelling`)
-            .then(res => setOffers(res.data))
+            .then(res => {
+                setOffers(res.data);
+                setOffersToDisplay(res.data);
+            })
             .catch(err => console.log(err))
     }, [])
+
+    useEffect(() => {
+        if (!typeFilter.length) return setOffersToDisplay(offers);
+        setOffersToDisplay(offers.filter(offer => typeFilter.includes(offer.type)));
+    }, [typeFilter])
 
     function handleSearchForm(e) {
         e.preventDefault();
@@ -40,6 +50,16 @@ export default function MainPage() {
         const month = String(date.getUTCMonth() + 1).padStart(2, '0');
         const year = date.getUTCFullYear();
         return `${day}/${month}/${year}`;
+    }
+
+    function handleFilterChange(filter) {
+        setTypeFilter((prevFilter) => {
+            if (prevFilter.includes(filter)) {
+                return prevFilter.filter(f => f !== filter);
+            } else {
+                return [...prevFilter, filter];
+            }
+        });
     }
 
     return (
@@ -62,41 +82,63 @@ export default function MainPage() {
             <footer className={s.footer}>
                 <div className={`page`}>
                     <h1>Take a look at the latest offers added by users :</h1>
-                    <article>
-                        {
-                            !offers.length ?
-                                <p>No offers to show for the moment</p>
-                                :
-                                offers.sort((a, b) => new Date(b.published) - new Date(a.published)).map((offer, index) => {
-                                    return (
-                                        <Link to={`/dwelling/${offer._id}`} className={s.offer} key={index}>
-                                            <div>
+                    <div>
+                        <form>
+                            <div><h2>Filter</h2></div>
+                            <div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("House")} />House</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Apartment")} />Apartment</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Villa")} />Villa</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Condominium")} />Condominium</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Townhouse")} />Townhouse</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Cottage")} />Cottage</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Bungalow")} />Bungalow</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Duplex")} />Duplex</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Penthouse")} />Penthouse</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Loft")} />Loft</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Mobile Home")} />Mobile Home</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Mansion")} />Mansion</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Studio Apartment")} />Studio Apartment</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Chalet")} />Chalet</p></div>
+                                <div><p><input type="checkbox" onChange={() => handleFilterChange("Farmhouse")} />Farmhouse</p></div>
+                            </div>
+                        </form>
+                        <article className={s.offers}>
+                            {
+                                !offersToDisplay.length ?
+                                    <p>No offers to show for the moment</p>
+                                    :
+                                    offersToDisplay.sort((a, b) => new Date(b.published) - new Date(a.published)).map((offer, index) => {
+                                        return (
+                                            <Link to={`/dwelling/${offer._id}`} className={s.offer} key={index}>
                                                 <div>
-                                                    <img src={offer.image.length ? offer.image[0] : noImageLogo} alt="Dwellling image" />
+                                                    <div>
+                                                        <img className={s.offer_img} src={offer.image.length ? offer.image[0] : noImageLogo} alt="Dwellling image" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div>
                                                 <div>
-                                                    <div><h1>{offer.title}</h1> ({offer.type})</div>
-                                                    <p>{
+                                                    <div>
+                                                        <div><h1>{offer.title}</h1> ({offer.type})</div>
+                                                        <p>{
 
-                                                        offer.rating.length
-                                                    }/5</p>
+                                                            offer.rating.length
+                                                        }/5</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className={s.description}>{offer.description}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p>For {offer.maxPersonNumber} person{offer.maxPersonNumber > 1 && "s"}</p>
+                                                        <p>{offer.city}📍</p>
+                                                        <p>Added {getDateFormat(offer.published)}</p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p className={s.description}>{offer.description}</p>
-                                                </div>
-                                                <div>
-                                                    <p>For {offer.maxPersonNumber} person{offer.maxPersonNumber > 1 && "s"}</p>
-                                                    <p>{offer.city}📍</p>
-                                                    <p>Added {getDateFormat(offer.published)}</p>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    )
-                                })
-                        }
-                    </article>
+                                            </Link>
+                                        )
+                                    })
+                            }
+                        </article>
+                    </div>
                 </div>
             </footer>
         </>

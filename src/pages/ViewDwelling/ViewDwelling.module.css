@@ -42,3 +42,12 @@
     border-radius: 3px;
     max-width: 100%;
 }
+
+.imageContainer {
+    margin-bottom: 2rem;
+}
+
+#delete {
+    background-color: rgb(255, 61, 61);
+    border-color: rgb(255, 0, 0);
+}
