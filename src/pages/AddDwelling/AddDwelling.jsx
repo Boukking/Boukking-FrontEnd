@@ -8,7 +8,6 @@ import axios from "axios";
 import s from './AddDwelling.module.css';
 
 // constance
-const API_URL = "http://localhost:3000";
 const nbOfImages = 3;
 
 export default function AddDwelling() {
@@ -51,7 +50,7 @@ export default function AddDwelling() {
         if (!title || !type || !maxPersonNumber || !adress || !city || !zipCode || !country) return setInfoBox(prevInfoBox => [...prevInfoBox, ["Fields with '*' are required"]]);
         const newDwelling = { title, description, type, maxPersonNumber, adress, city, zipCode, country };
         const imgUrl = [];
-        axios.post(`${API_URL}/dwelling`, newDwelling, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
+        axios.post(`${import.meta.env.VITE_API_URL}/dwelling`, newDwelling, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
             .then(res => {
                 setInfoBox(prevInfoBox => [...prevInfoBox, ["The dwelling has been created"]]);
                 newDwelling._id = res.data._id;
@@ -60,7 +59,7 @@ export default function AddDwelling() {
                         if (imageState[0]) {
                             const uploadData = new FormData();
                             uploadData.append("imageUrl", imageState[0].target.files[0]);
-                            return axios.post(`${API_URL}/dwelling/img`, uploadData, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
+                            return axios.post(`${import.meta.env.VITE_API_URL}/dwelling/img`, uploadData, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
                                 .then(res => {
                                     imgUrl.push(res.data.fileUrl);
                                     setInfoBox(prevInfoBox => [...prevInfoBox, [`Image ${index + 1} successfully uploaded`]]);
@@ -70,7 +69,7 @@ export default function AddDwelling() {
                     })
                     return Promise.all(uploadPromises)
                         .then(() => {
-                            return axios.put(`${API_URL}/dwelling/${newDwelling._id}`, { image: imgUrl }, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
+                            return axios.put(`${import.meta.env.VITE_API_URL}/dwelling/${newDwelling._id}`, { image: imgUrl }, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
                         })
                         .then(() => {
                             setInfoBox(prevInfoBox => [...prevInfoBox, ["The image(s) have been added to the dwelling"]]);
@@ -134,7 +133,7 @@ export default function AddDwelling() {
                     </div>
                     <div>
                         <div>
-                            <p>Adress*</p>
+                            <p>Address*</p>
                             <input type="text" required value={adress} onChange={(e) => setAdress(e.target.value)} />
                         </div>
                         <div>

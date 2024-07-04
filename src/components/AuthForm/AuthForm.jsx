@@ -6,9 +6,6 @@ import { AuthContext } from "./../../context/AuthContext";
 // style
 import s from './AuthForm.module.css';
 
-// constance
-const API_URL = "http://localhost:3000";
-
 export default function AuthForm({ authType, closeAuthForm }) {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -26,7 +23,7 @@ export default function AuthForm({ authType, closeAuthForm }) {
 
     function sendRegister(requestBody) {
         if (password.length < 3) return setErrorMessage("Password must be at least 3 characters long");
-        axios.post(`${API_URL}/auth/signup`, requestBody)
+        axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, requestBody)
             .then((response) => {
                 sendLogin(requestBody);
             })
@@ -37,7 +34,7 @@ export default function AuthForm({ authType, closeAuthForm }) {
     }
 
     function sendLogin(requestBody) {
-        axios.post(`${API_URL}/auth/login`, requestBody)
+        axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, requestBody)
             .then((response) => {
                 storeToken(response.data.authToken);
                 authenticateUser();

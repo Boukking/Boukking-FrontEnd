@@ -8,7 +8,6 @@ import { AuthContext } from "./../../context/AuthContext";
 import s from './ViewDwelling.module.css';
 
 // constance
-const API_URL = "http://localhost:3000";
 
 export default function ViewDwelling() {
     const [dwelling, setDwelling] = useState(null);
@@ -20,7 +19,7 @@ export default function ViewDwelling() {
     const { isLoggedIn, user } = useContext(AuthContext);
 
     useEffect(() => {
-        axios.get(`${API_URL}/dwelling/${dwellingId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/dwelling/${dwellingId}`)
             .then(res => {
                 setDwelling(res.data);
             })
@@ -30,7 +29,7 @@ export default function ViewDwelling() {
     }, [])
 
     function deleteDwelling(dwellingId) {
-        axios.delete(`${API_URL}/dwelling/${dwellingId}`, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
+        axios.delete(`${import.meta.env.VITE_API_URL}/dwelling/${dwellingId}`, { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } })
             .then(() => {
                 navigate("/");
             })
@@ -55,8 +54,7 @@ export default function ViewDwelling() {
                         <div>
                             <p>Type <b>{dwelling.type}</b></p>
                             <p>For <b>{dwelling.maxPersonNumber}</b> person{dwelling.maxPersonNumber > 1 && "s"}</p>
-                            <p>rate <b>4.8/5 ★</b></p>
-                            <p>Address <b>{dwelling.adress + " " + dwelling.zipCode + " " + dwelling.city + " - " + dwelling.country}</b></p>
+                            <p>Address <b>{dwelling.adress + ", " + dwelling.zipCode + " " + dwelling.city + " - " + dwelling.country}</b></p>
                         </div>
 
                         <p><b>Description</b></p>
@@ -65,21 +63,21 @@ export default function ViewDwelling() {
                         <p><b>Image{dwelling.image.length > 1 && "s"}</b></p>
                         {
                             dwelling.image.length !== 0 ?
-                            <>
-                                <div className={s.imageContainer}>{dwelling.image.map((image, index) => {
-                                    return (
-                                        <div key={index} style={{ width: `calc(${100 / dwelling.image.length}% - ${dwelling.image.length - 1}rem)`, textAlign: "center" }}>
-                                            <img
-                                                src={image}
-                                                alt={`Image ${index + 1}`}
-                                            />
-                                        </div>
-                                    )
-                                })}
-                                </div>
-                            </>
-                            :
-                            <p>No images available  </p>
+                                <>
+                                    <div className={s.imageContainer}>{dwelling.image.map((image, index) => {
+                                        return (
+                                            <div key={index} style={{ width: `calc(${100 / dwelling.image.length}% - ${dwelling.image.length - 1}rem)`, textAlign: "center" }}>
+                                                <img
+                                                    src={image}
+                                                    alt={`Image ${index + 1}`}
+                                                />
+                                            </div>
+                                        )
+                                    })}
+                                    </div>
+                                </>
+                                :
+                                <p>No images available  </p>
                         }
                     </>
                 }

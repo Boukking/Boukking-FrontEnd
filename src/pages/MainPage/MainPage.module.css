@@ -73,6 +73,7 @@
     padding: 6rem 0 2rem;
     flex-grow: 1;
     overflow-y: auto;
+    min-height: 1000px;
 }
 
 .footer form > div:first-of-type {
